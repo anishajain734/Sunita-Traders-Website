@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUNITA TRADERS — Catalog Presentation</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#1a0000;color:#2b1a12;overflow:hidden}
+#deck{height:100vh;width:100vw;position:relative}
+.slide{position:absolute;inset:0;display:none;padding:4vh 5vw;overflow:auto}
+.slide.active{display:flex;flex-direction:column;justify-content:center}
+.red{background:radial-gradient(ellipse at center,#8B0000 0%,#4a0000 100%);color:#fff;text-align:center}
+.cream{background:#fdf8ec;color:#2b1a12}
+h1{font-size:clamp(40px,7vw,84px);letter-spacing:2px;color:#fff}
+h1 span{color:#f3d67c}
+.kicker{letter-spacing:5px;color:#D4AF37;font-weight:700;font-size:14px;margin-bottom:12px}
+.gold-rule{width:120px;height:5px;background:linear-gradient(90deg,#D4AF37,#8B0000,#D4AF37);margin:16px auto;border-radius:4px}
+.big-phone{font-size:clamp(24px,4vw,44px);font-weight:800;color:#f3d67c;margin-top:10px}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px;max-height:62vh}
+.grid4 figure{background:#fff;border-radius:12px;overflow:hidden;border:2px solid #D4AF37;display:flex;flex-direction:column}
+.grid4 img{width:100%;height:24vh;object-fit:cover;background:#fff}
+.grid4 figcaption{text-align:center;padding:8px;font-weight:700;color:#5c0000;font-size:15px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center;max-width:1000px;margin:16px auto 0}
+.two img{width:100%;border-radius:12px;border:4px solid #D4AF37}
+.tick{list-style:none;margin-top:12px;font-size:17px}
+.tick li{margin:7px 0}
+#bar{position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,.85);color:#f3d67c;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;font-size:14px;z-index:10}
+#bar button{background:#D4AF37;border:none;padding:9px 20px;border-radius:20px;font-weight:800;cursor:pointer;color:#4a0000;font-size:15px}
+#bar button:hover{background:#f3d67c}
+#num{font-weight:700}
+a.wa{display:inline-block;background:#25D366;color:#fff;padding:12px 30px;border-radius:30px;font-weight:800;margin-top:14px;text-decoration:none;font-size:18px}
+@media print{.slide{position:static;display:flex!important;page-break-after:always;height:100vh}#bar{display:none}body{overflow:visible}}
+@media(max-width:700px){.grid4{grid-template-columns:1fr}.grid4 img{height:20vh}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="deck"></div>
+<div id="bar"><button onclick="go(-1)">← Prev</button><span id="num"></span><span style="opacity:.8">SUNITA TRADERS • Since 1970 • All-India Delivery • +91 7976943373</span><button onclick="go(1)">Next →</button></div>
+<script>
+const PHONE='+91 7976943373';
+const carpets=Array.from({length:31},(_,i)=>({src:`images/carpets/carpet-${String(i+1).padStart(2,'0')}.jpg`,cap:`Carpet Design ${i+1}`}));
+const mats=Array.from({length:14},(_,i)=>({src:`images/doormats/doormat-${String(i+1).padStart(2,'0')}.jpg`,cap:`Door Mat ${i+1}`}));
+const deck=document.getElementById('deck');
+let html='';
+html+=`<div class="slide red"><img src="images/logo-small.png" alt="Sunita Traders logo" style="width:120px;height:120px;border-radius:50%;border:3px solid #D4AF37;margin:0 auto 8px;background:#FAF6EE"><div class="kicker">✦ CARPETS • DOOR MATS • RUNNERS • WEDDING CARPETS ✦</div><h1>SUNITA <span>TRADERS</span></h1><p style="font-size:20px;color:#f3d67c">Premium Carpets & Door Mats — Retail Shop</p><div class="gold-rule"></div><p style="font-size:18px">31+ Carpet Designs • 14+ Door Mat Designs • Ready Stock</p><div class="big-phone">📞 ${PHONE}</div><p>Shop No. 228, Badi Choupad, Tripolia Bazar, Biseswarji, Jaipur 302002</p><p style="opacity:.85">Trusted Since 1970 • Best Price • Genuine Quality • All-India Delivery</p></div>`;
+html+=`<div class="slide cream"><div class="kicker">ABOUT US</div><h2 style="font-size:36px;color:#5c0000">Namaste! Swagat hai 🙏</h2><div class="two"><div><ul class="tick"><li>✔ Wedding / event red carpets & designer prints</li><li>✔ Home carpets, runners & wall-to-wall looks</li><li>✔ Anti-skid washable door mats</li><li>✔ Bulk orders: weddings, hotels, offices</li><li>✔ WhatsApp par photo bhejkar order</li></ul><p style="margin-top:12px"><b>Open Daily 9 AM – 9 PM</b><br>📞 ${PHONE}</p></div><div><img src="${carpets[0].src}"></div></div></div>`;
+html+=`<div class="slide red"><div class="kicker">COLLECTION 1</div><h1>CARPETS</h1><p style="font-size:22px;color:#f3d67c">31 Designs • Wedding / Home / Event</p><div class="gold-rule"></div><p>Screenshot lekar WhatsApp par bhejein</p></div>`;
+for(let i=0;i<carpets.length;i+=4){
+  const c=carpets.slice(i,i+4);
+  html+=`<div class="slide cream"><div class="kicker">CARPETS (${i+1}–${i+c.length} of 31)</div><div class="grid4">`+c.map(x=>`<figure><img src="${x.src}" loading="lazy"><figcaption>${x.cap} • ${PHONE}</figcaption></figure>`).join('')+`</div></div>`;
+}
+html+=`<div class="slide red"><div class="kicker">COLLECTION 2</div><h1>DOOR <span>MATS</span></h1><p style="font-size:22px;color:#f3d67c">14 Designs • Anti-skid • Washable</p><div class="gold-rule"></div></div>`;
+for(let i=0;i<mats.length;i+=4){
+  const c=mats.slice(i,i+4);
+  html+=`<div class="slide cream"><div class="kicker">DOOR MATS (${i+1}–${i+c.length} of 14)</div><div class="grid4">`+c.map(x=>`<figure><img src="${x.src}" loading="lazy"><figcaption>${x.cap} • ${PHONE}</figcaption></figure>`).join('')+`</div></div>`;
+}
+html+=`<div class="slide red"><div class="kicker">CONTACT</div><img src="images/logo-small.png" alt="Sunita Traders logo" style="width:90px;height:90px;border-radius:50%;border:3px solid #D4AF37;margin:6px auto;background:#FAF6EE"><h1>Order <span>Karein</span></h1><div class="big-phone">📞 ${PHONE}</div><p>Shop No. 228, Badi Choupad, Tripolia Bazar, Jaipur 302002</p><a class="wa" href="https://wa.me/917976943373?text=Namaste!%20Mujhe%20catalog%20chahiye" target="_blank">💬 WhatsApp Karein</a><p style="margin-top:10px;opacity:.85">Serving Since 1970 • All-India Delivery • © 2026 SUNITA TRADERS • Thank You 🙏</p></div>`;
+deck.innerHTML=html;
+const slides=[...document.querySelectorAll('.slide')];let cur=0;
+function show(){slides.forEach((s,i)=>s.classList.toggle('active',i===cur));document.getElementById('num').textContent=`${cur+1} / ${slides.length}`;}
+function go(d){cur=(cur+d+slides.length)%slides.length;show();}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1);});
+show();
+</script>
+</body>
+</html>
